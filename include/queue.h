@@ -1,5 +1,6 @@
 #ifndef QUEUE_H
     #define QUEUE_H
+    #include <stdbool.h>
     #include "patient.h"
 
     typedef struct _queue QUEUE;

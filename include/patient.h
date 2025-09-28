@@ -1,6 +1,6 @@
 #ifndef PATIENT_H
     #define PATIENT_H
-
+    #include <stdbool.h>
     #include "history.h"
 
     typedef struct _patient PATIENT;

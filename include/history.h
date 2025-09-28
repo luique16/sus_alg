@@ -1,6 +1,8 @@
 #ifndef HISTORY_H
     #define HISTORY_H
 
+    #include <stdbool.h>
+
     typedef struct _history HISTORY;
 
     HISTORY* init_history();

@@ -1,5 +1,6 @@
 #ifndef LIST_H
     #define LIST_H
+    #include <stdbool.h>
     #include "patient.h"
 
     typedef struct _list LIST;
