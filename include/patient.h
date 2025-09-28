@@ -11,5 +11,5 @@
     void get_patient_id(PATIENT *patient, int *id);
     HISTORY* get_patient_history(PATIENT *patient);
     void print_patient(PATIENT *patient);
-    bool delete_patient(PATIENT *patient);
+    bool delete_patient(PATIENT **patient);
 #endif

@@ -14,4 +14,5 @@
     char* get_last_procedure(HISTORY *history);
     char* pop_last_procedure(HISTORY *history);
     void print_history(HISTORY *history);
+    bool delete_history(HISTORY **history);
 #endif

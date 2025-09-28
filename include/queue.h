@@ -8,7 +8,7 @@
     QUEUE* init_queue();
     bool enqueue(QUEUE *queue, PATIENT *patient);
     PATIENT* dequeue(QUEUE *queue);
-    void delete_queue(QUEUE *queue);
+    void delete_queue(QUEUE **queue);
     void print_queue(QUEUE *queue);
     bool is_queue_empty(QUEUE *queue);
     bool is_queue_full_default(QUEUE *queue);
