@@ -1,0 +1,15 @@
+#ifndef LIST_H
+    #define LIST_H
+    #include "patient.h"
+
+    typedef struct _list LIST;
+
+    LIST* init_list();
+    void add_patient(LIST *list, PATIENT *patient);
+    void remove_patient(LIST *list, int patient_id);
+    PATIENT* get_patient(LIST *list, int patient_id);
+    PATIENT* get_patient(LIST *list, char *name);
+    void print_list(LIST *list);
+    bool delete_list(LIST *list);
+    bool is_list_empty(LIST *list);
+#endif
