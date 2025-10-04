@@ -7,11 +7,10 @@
 
     PATIENT* init_patient();
     void set_patient_name(PATIENT *patient, char *name);
-    void get_patient_name(PATIENT *patient, char *name);
+    char* get_patient_name(PATIENT *patient);
     int get_patient_id(PATIENT *patient);
     HISTORY* get_patient_history(PATIENT *patient);
     bool set_patient_history(PATIENT *patient, HISTORY *history);
     void set_patient_id(PATIENT *patient, int id);
-    void print_patient(PATIENT *patient);
     bool delete_patient(PATIENT **patient);
 #endif
