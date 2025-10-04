@@ -12,7 +12,6 @@
     bool is_history_full(HISTORY *history);
     void add_procedure_to_history(HISTORY *history, char *procedure);
     char* get_last_procedure(HISTORY *history);
-    char* pop_last_procedure(HISTORY *history);
-    void print_history(HISTORY *history);
+    void pop_last_procedure(HISTORY *history);
     bool delete_history(HISTORY **history);
 #endif
