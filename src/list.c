@@ -135,6 +135,7 @@ bool delete_list(LIST **list){
     free(p1);
     free(p2);
     free(*list);
+    return true;
 }
 
 /*
