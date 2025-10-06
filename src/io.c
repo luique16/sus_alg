@@ -17,44 +17,55 @@ void skip_line(FILE *file) {
 bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
     FILE *list_file = fopen(list_filename, "w");
 
-    fprintf(list_file, "[\n");
+    if(is_list_empty(list)){
+        fprintf(list_file, "[]\n");
+    } else {
+        fprintf(list_file, "[\n");
 
-    for (int i = 0; i < get_list_size(list); i++) {
-        PATIENT *patient = pop_patient(list);
+        for (int i = 0; i < get_list_size(list); i++) {
+            int id = get_last_patients_id(list);
+            PATIENT *patient = get_patient_by_id(list, id);
 
-        char* name = get_patient_name(patient);;
+            char* name = get_patient_name(patient);;
 
-        fprintf(list_file, "  {\n");
-        fprintf(list_file, "    \"id\": %d,\n", get_patient_id(patient));
-        fprintf(list_file, "    \"name\": \"%s\",\n", name);
-        fprintf(list_file, "    \"history\": \"%s\"\n", save_history(get_patient_history(patient)));
-        fprintf(list_file, "  }");
+            fprintf(list_file, "  {\n");
+            fprintf(list_file, "    \"id\": %d,\n", get_patient_id(patient));
+            fprintf(list_file, "    \"name\": \"%s\",\n", name);
+            fprintf(list_file, "    \"history\": \"%s\"\n", save_history(get_patient_history(patient)));
+            fprintf(list_file, "  }");
 
 
-        if (i < get_list_size(list) - 1) {
-            fprintf(list_file, ",");
+            if (i < get_list_size(list) - 1) {
+                fprintf(list_file, ",");
+            }
+
+            remove_patient(list, id);
         }
-    }
 
-    fprintf(list_file, "]\n");
+        fprintf(list_file, "]\n");
+    }
 
     fclose(list_file);
 
     FILE *queue_file = fopen(queue_filename, "w");
 
-    fprintf(queue_file, "[\n");
+    if(is_queue_empty(queue)){
+        fprintf(queue_file, "[]\n");
+    } else {
+        fprintf(queue_file, "[\n");
 
-    for (int i = 0; i < get_queue_size(queue); i++) {
-        PATIENT *patient = dequeue(queue);
+        for (int i = 0; i < get_queue_size(queue); i++) {
+            PATIENT *patient = dequeue(queue);
 
-        fprintf(queue_file, "  %d", get_patient_id(patient));
+            fprintf(queue_file, "  %d", get_patient_id(patient));
 
-        if (i < get_queue_size(queue) - 1) {
-            fprintf(queue_file, ",");
+            if (i < get_queue_size(queue) - 1) {
+                fprintf(queue_file, ",");
+            }
         }
-    }
 
-    fprintf(queue_file, "]\n");
+        fprintf(queue_file, "]\n");
+    }
 
     fclose(queue_file);
 
@@ -74,11 +85,14 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
 
     char line[MAX_LINE_SIZE];
 
-    if (strcmp(line, "[]") == 0 || strcmp(line, EOF) == 0) {
+    fgets(line, MAX_LINE_SIZE, list_file);
+
+    if (strcmp(line, "[]\n") == 0) {
         complete = true;
     }
 
     while (!complete) {
+        printf("uee\n");
         skip_line(list_file);
 
         int id;
@@ -141,7 +155,7 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
 
     fgets(line, MAX_LINE_SIZE, queue_file);
 
-    if (strcmp(line, "[]") == 0 || strcmp(line, EOF) == 0) {
+    if (strcmp(line, "[]\n") == 0) {
         complete = true;
     }
 

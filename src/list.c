@@ -46,7 +46,7 @@ void add_patient(LIST *list, PATIENT *patient){
     n->next = NULL;
     n->patient = patient;
 
-    if(is_list_empty(list) == false){
+    if(is_list_empty(list) == true){
         list->head = n;
         n->prev = NULL;
         list->end = n;
@@ -112,6 +112,14 @@ void remove_patient(LIST *list, int patient_id){
     p->next = NULL;
     p->prev = NULL;
     free(p);
+}
+
+int get_last_patients_id(LIST *list){
+    if(is_list_empty(list)){
+        return 1;
+    }
+
+    return get_patient_id(list->end->patient);
 }
 
 void print_list(LIST *list){

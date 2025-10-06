@@ -12,6 +12,7 @@ typedef struct _patient {
 
 PATIENT* init_patient(){
     PATIENT *patient = (PATIENT*) calloc(1, sizeof(PATIENT));
+    patient->name = (char*) malloc(sizeof(char) * 100);
 
     return patient;
 }
