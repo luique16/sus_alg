@@ -10,7 +10,6 @@
     void remove_patient(LIST *list, int patient_id);
     PATIENT* get_patient_by_id(LIST *list, int patient_id);
     PATIENT* get_patient_by_name(LIST *list, char *name);
-    PATIENT* pop_patient(LIST *list);
     void print_list(LIST *list);
     bool delete_list(LIST **list);
     bool is_list_empty(LIST *list);

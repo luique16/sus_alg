@@ -1,5 +1,8 @@
 #define DEFAULT_MAX_SIZE 15
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "../include/queue.h"
 #include "../include/patient.h"
 
@@ -16,12 +19,12 @@ typedef struct _queue {
 } QUEUE;
 
 QUEUE* init_queue(){
-    QUEUE *q = (QUEUE*) calloc(1, sizeof(QUEUE));
+    QUEUE *queue = (QUEUE*) calloc(1, sizeof(QUEUE));
     queue->size = 0;
     queue->head = NULL;
     queue->tail = NULL;
 
-    return q;
+    return queue;
 }
 
 bool is_queue_empty(QUEUE *queue){
@@ -89,13 +92,14 @@ bool is_queue_full(QUEUE *queue, unsigned int limit){
 }
 
 void delete_queue(QUEUE **queue){
-    NODE *p1 = queue->head;
-    NODE *p2 = queue->head->next;
+    NODE *p1 = (*queue)->head;
+    NODE *p2 = (*queue)->head->next;
 
-    for(int i = 0; i < queue->size; i++){
+    for(int i = 0; i < (*queue)->size; i++){
         if(p1 == NULL){
             break;
         }
+
         free(p1->next);
         free(p1->prev);
         free(p1);
@@ -104,9 +108,7 @@ void delete_queue(QUEUE **queue){
             p2 = p2->next;
         }
     }
+
     free(p1);
     free(p2);
-    free(list->head);
-    free(list->tail);
-    free(list);
 }

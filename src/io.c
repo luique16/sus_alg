@@ -22,8 +22,7 @@ bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
     for (int i = 0; i < get_list_size(list); i++) {
         PATIENT *patient = pop_patient(list);
 
-        char* name;
-        get_patient_name(patient, name);
+        char* name = get_patient_name(patient);;
 
         fprintf(list_file, "  {\n");
         fprintf(list_file, "    \"id\": %d,\n", get_patient_id(patient));
