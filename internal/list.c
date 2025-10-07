@@ -3,15 +3,19 @@
 
 #include "../include/list.h"
 
+void flush(void){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+}
+
 void add_patient_list(LIST *list){
-    printf("==============================\n");
+    printf("\n==============================\n");
     printf(" ADICIONAR PACIENTE - CADASTRO\n");
     printf("==============================\n");
 
     printf("\n");
 
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}
+    flush();
 
     printf("Digite o nome do paciente:\n");
     char name[100];
@@ -31,7 +35,7 @@ void add_patient_list(LIST *list){
 }
 
 void remove_patient_list(LIST *list){
-    printf("==============================\n");
+    printf("\n==============================\n");
     printf(" REMOVA PACIENTE - CADASTRO  \n");
     printf("==============================\n");
 
@@ -51,7 +55,7 @@ void remove_patient_list(LIST *list){
 }
 
 void list_patients_list(LIST *list){
-    printf("==============================\n");
+    printf("\n==============================\n");
     printf("       LISTA PACIENTES        \n");
     printf("==============================\n");
 
@@ -61,15 +65,18 @@ void list_patients_list(LIST *list){
 }
 
 void search_patient_by_name_list(LIST *list){
-    printf("==============================\n");
+    printf("\n==============================\n");
     printf("      BUSCAR PACIENTE        \n");
     printf("==============================\n");
 
     printf("\n");
 
+    flush();
+
     printf("Digite o nome do paciente: ");
     char name[100];
     fgets(name, 100, stdin);
+    name[strcspn(name, "\n")] = '\0';
 
     PATIENT *patient = get_patient_by_name(list, name);
     if(patient == NULL){
@@ -83,7 +90,7 @@ void search_patient_by_name_list(LIST *list){
 }
 
 void search_patient_by_id_list(LIST *list){
-    printf("==============================\n");
+    printf("\n==============================\n");
     printf("      BUSCAR PACIENTE        \n");
     printf("==============================\n");
 
@@ -105,7 +112,7 @@ void search_patient_by_id_list(LIST *list){
 }
 
 void list_menu(LIST *list){
-    printf("==============================\n");
+    printf("\n==============================\n");
     printf("    CADASTRO GERAL - LISTA    \n");
     printf("==============================\n");
 

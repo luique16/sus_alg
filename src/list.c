@@ -30,7 +30,7 @@ LIST* init_list(){
 
 
 bool is_list_empty(LIST *list){
-    if(list->head != NULL){
+    if(list->size != 0){
         return false;
     }else{
         return true;
@@ -49,11 +49,14 @@ void add_patient(LIST *list, PATIENT *patient){
     if(is_list_empty(list) == true){
         list->head = n;
         n->prev = NULL;
-        list->end = n;
     }else {
         list->end->next = n;
         n->prev = list->end;
     }
+
+    list->end = n;
+
+    list->size += 1;
 }
 
 PATIENT* get_patient_by_id(LIST *list, int patient_id){
@@ -107,16 +110,24 @@ void remove_patient(LIST *list, int patient_id){
         p = p->next;
     }
 
-    p->prev->next = p->next;
-    p->next->prev = p->prev;
-    p->next = NULL;
-    p->prev = NULL;
+    if (p->prev)
+        p->prev->next = p->next;
+    else
+        list->head = p->next;
+
+    if (p->next)
+        p->next->prev = p->prev;
+    else
+        list->end = p->prev;
+
+    list->size -= 1;
+
     free(p);
 }
 
 int get_last_patients_id(LIST *list){
     if(is_list_empty(list)){
-        return 1;
+        return 0;
     }
 
     return get_patient_id(list->end->patient);
@@ -125,30 +136,25 @@ int get_last_patients_id(LIST *list){
 void print_list(LIST *list){
     NODE *p = list->head;
 
-    for(int i = 0; i < list->size; i++){
+    for(int i = 0; i < list->size && p != NULL; i++){
         printf("[id: %d] %s\n", get_patient_id(p->patient), get_patient_name(p->patient));
         p = p->next;
     }
 }
 
 bool delete_list(LIST **list){
-    NODE *p1 = (*list)->head;
-    NODE *p2 = (*list)->head->next;
+    NODE *curr = (*list)->head;
 
-    for(int i = 0; i < (*list)->size; i++){
-        if(p1 == NULL){
-            break;
-        }
-
-        free(p1);
-        p1 = p2;
-        p2 = p2->next;
+    while (curr) {
+        NODE *next = curr->next;
+        free(curr);
+        curr = next;
     }
 
-    free(p1);
-    free(p2);
     free(*list);
+
     *list = NULL;
 
     return true;
 }
+

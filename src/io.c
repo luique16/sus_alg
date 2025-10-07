@@ -20,15 +20,16 @@ bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
     if(is_list_empty(list)){
         fprintf(list_file, "[]\n");
     } else {
-        fprintf(list_file, "[\n");
+        fprintf(list_file, "[");
 
-        for (int i = 0; i < get_list_size(list); i++) {
+        int size = get_list_size(list);
+        for (int i = 0; i < size; i++) {
             int id = get_last_patients_id(list);
             PATIENT *patient = get_patient_by_id(list, id);
 
             char* name = get_patient_name(patient);;
 
-            fprintf(list_file, "  {\n");
+            fprintf(list_file, "\n  {\n");
             fprintf(list_file, "    \"id\": %d,\n", get_patient_id(patient));
             fprintf(list_file, "    \"name\": \"%s\",\n", name);
             fprintf(list_file, "    \"history\": \"%s\"\n", save_history(get_patient_history(patient)));
@@ -42,7 +43,7 @@ bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
             remove_patient(list, id);
         }
 
-        fprintf(list_file, "]\n");
+        fprintf(list_file, "\n]\n");
     }
 
     fclose(list_file);
@@ -64,7 +65,7 @@ bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
             }
         }
 
-        fprintf(queue_file, "]\n");
+        fprintf(queue_file, "\n]\n");
     }
 
     fclose(queue_file);
@@ -87,9 +88,8 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
 
     fgets(line, MAX_LINE_SIZE, list_file);
 
-    if (strcmp(line, "[]\n") == 0) {
+    if (strncmp(line, "[]", 2) == 0)
         complete = true;
-    }
 
     while (!complete) {
         printf("uee\n");
@@ -125,12 +125,12 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
         add_patient(*list, patient);
 
         fgets(line, MAX_LINE_SIZE, list_file);
-        bool end = false;
+        bool end = true;
 
         for(int i = 0; i < strlen(line); i += 1) {
             if(line[i] == '}') {
                 if(line[i + 1] == ',') {
-                    end = true;
+                    end = false;
                 }
                 break;
             }
@@ -164,7 +164,7 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
 
         fgets(line, 100, queue_file);
 
-        if (strcmp(line, EOF) == 0 || strcmp(line, "]") == 0) {
+        if (strncmp(line, "]", 2) == 0 || strcmp(line, "]") == 0) {
             complete = true;
             break;
         }

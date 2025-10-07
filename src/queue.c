@@ -28,7 +28,7 @@ QUEUE* init_queue(){
 }
 
 bool is_queue_empty(QUEUE *queue){
-    if(queue->head == NULL){
+    if(queue->size != 0){
         return false;
     }else{
         return true;
