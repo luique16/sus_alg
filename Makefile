@@ -7,3 +7,7 @@ run:
 
 clean:
 	rm -rf build
+
+data:
+	echo "[]" > list.json
+	echo "[]" > queue.json
