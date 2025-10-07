@@ -28,11 +28,7 @@ QUEUE* init_queue(){
 }
 
 bool is_queue_empty(QUEUE *queue){
-    if(queue->size != 0){
-        return false;
-    }else{
-        return true;
-    }
+    return queue->size == 0;
 }
 
 bool enqueue(QUEUE *queue, PATIENT *patient){
@@ -42,7 +38,6 @@ bool enqueue(QUEUE *queue, PATIENT *patient){
 
     NODE *n = (NODE*) calloc(1, sizeof(NODE));
     n->patient = patient;
-    queue->size += 1;
     n->next = NULL;
     
     if(is_queue_empty(queue)){
@@ -50,8 +45,10 @@ bool enqueue(QUEUE *queue, PATIENT *patient){
         n->prev = NULL;
     }else {
         n->prev = queue->tail;
+        queue->tail->next = n;
     }
     queue->tail = n;
+    queue->size += 1;
     
     return true;
 }
@@ -61,21 +58,33 @@ int get_queue_size(QUEUE *queue){
 }
 
 PATIENT* dequeue(QUEUE *queue){
+    if (queue == NULL || queue->head == NULL) return NULL;
+
     NODE *n = queue->head;
+    PATIENT *p = n->patient;
 
-    n->next->prev = NULL;
     queue->head = n->next;
-    queue->size -= 1;
-    free(n->next);
+    if (queue->head != NULL)
+        queue->head->prev = NULL;
+    else
+        queue->tail = NULL;
 
-    return n->patient;
+    queue->size -= 1;
+    free(n);
+
+    return p;
 }
-    
+ 
 void print_queue(QUEUE *queue){
+    if(is_queue_empty(queue)){
+        printf("(Sem pacientes na fila)\n");
+        return;
+    }
+
     NODE *p = queue->head;
 
     for(int i = 0; i < queue->size; i++){
-        printf("%s\n", get_patient_name(p->patient));
+        printf("[%d] %s\n", i + 1, get_patient_name(p->patient));
         p = p->next;
         if(p == NULL){
             break;
@@ -83,32 +92,22 @@ void print_queue(QUEUE *queue){
     }
 }
 
-bool is_queue_full(QUEUE *queue, unsigned int limit){
-    if(queue->size >= limit){
-        return true;
-    }else{
-        return false;
-    }
+bool is_queue_full(QUEUE *queue){
+    return queue->size >= DEFAULT_MAX_SIZE;
 }
 
 void delete_queue(QUEUE **queue){
-    NODE *p1 = (*queue)->head;
-    NODE *p2 = (*queue)->head->next;
+    if (queue == NULL || *queue == NULL) return;
 
-    for(int i = 0; i < (*queue)->size; i++){
-        if(p1 == NULL){
-            break;
-        }
+    NODE *curr = (*queue)->head;
 
-        free(p1->next);
-        free(p1->prev);
-        free(p1);
-        p1 = p2;
-        if(p2 != NULL){
-            p2 = p2->next;
-        }
+    while (curr) {
+        NODE *next = curr->next;
+        free(curr);
+        curr = next;
     }
 
-    free(p1);
-    free(p2);
+    free(*queue);
+    *queue = NULL;
 }
+

@@ -117,45 +117,47 @@ void search_patient_by_id_list(LIST *list){
 }
 
 void list_menu(LIST *list){
-    printf("\n==============================\n");
-    printf("    CADASTRO GERAL - LISTA    \n");
-    printf("==============================\n");
+    while(true) {
+        printf("\n==============================\n");
+        printf("    CADASTRO GERAL - LISTA    \n");
+        printf("==============================\n");
 
-    printf("\n");
+        printf("\n");
 
-    printf("[1] Adicionar paciente\n");
-    printf("[2] Remover paciente\n");
-    printf("[3] Listar pacientes\n");
-    printf("[4] Buscar por nome\n");
-    printf("[5] Buscar por id\n");
-    printf("[0] Voltar\n");
+        printf("[1] Adicionar paciente\n");
+        printf("[2] Remover paciente\n");
+        printf("[3] Listar pacientes\n");
+        printf("[4] Buscar por nome\n");
+        printf("[5] Buscar por id\n");
+        printf("[0] Voltar\n");
 
-    printf("Selecione uma opção: ");
+        printf("Selecione uma opção: ");
 
-    int option;
-    scanf("%d", &option);
+        int option;
+        scanf("%d", &option);
 
-    switch(option){
-        case 1:
-            add_patient_list(list);
-            return;
-        case 2:
-            remove_patient_list(list);
-            return;
-        case 3:
-            list_patients_list(list);
-            return;
-        case 4:
-            search_patient_by_name_list(list);
-            return;
-        case 5:
-            search_patient_by_id_list(list);
-            return;
-        case 0:
-            return;
-        default:
-            printf("Opção inválida\n");
-            return;
+        switch(option){
+            case 1:
+                add_patient_list(list);
+                continue;
+            case 2:
+                remove_patient_list(list);
+                continue;
+            case 3:
+                list_patients_list(list);
+                continue;
+            case 4:
+                search_patient_by_name_list(list);
+                continue;
+            case 5:
+                search_patient_by_id_list(list);
+                continue;
+            case 0:
+                return;
+            default:
+                printf("Opção inválida\n");
+                continue;
+        }
     }
 
     return;

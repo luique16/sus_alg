@@ -52,14 +52,14 @@ bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
     if(is_queue_empty(queue)){
         fprintf(queue_file, "[]\n");
     } else {
-        fprintf(queue_file, "[\n");
+        fprintf(queue_file, "[");
 
         int size = get_queue_size(queue);
 
         for (int i = 0; i < size; i++) {
             PATIENT *patient = dequeue(queue);
 
-            fprintf(queue_file, "  %d", get_patient_id(patient));
+            fprintf(queue_file, "\n  %d", get_patient_id(patient));
 
             if (i < size - 1) {
                 fprintf(queue_file, ",");
@@ -164,7 +164,7 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
 
         fgets(line, 100, queue_file);
 
-        if (strncmp(line, "]", 2) == 0 || strcmp(line, "]") == 0) {
+        if (strncmp(line, "]", 2) == 0 || strncmp(line, "]", 1) == 0) {
             complete = true;
             break;
         }
@@ -172,6 +172,7 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
         sscanf(line, "  %d,", &id);
 
         PATIENT *patient = get_patient_by_id(*list, id);
+
         if (patient != NULL) {
             enqueue(*queue, patient);
         }

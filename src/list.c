@@ -144,8 +144,13 @@ PATIENT* get_last(LIST *list){
 void print_list(LIST *list){
     NODE *p = list->head;
 
+    if(is_list_empty(list)){
+        printf("(Sem pacientes cadastrados)\n");
+        return;
+    }
+
     for(int i = 0; i < list->size && p != NULL; i++){
-        printf("[id: %d] %s\n", get_patient_id(p->patient), get_patient_name(p->patient));
+        printf("[ID: %d] %s\n", get_patient_id(p->patient), get_patient_name(p->patient));
         p = p->next;
     }
 }

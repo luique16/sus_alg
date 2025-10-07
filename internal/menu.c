@@ -4,6 +4,7 @@
 #include "../include/list.h"
 #include "../include/queue.h"
 #include "list.c"
+#include "queue.c"
 
 int menu() {
     printf("\n==============================\n");
@@ -30,7 +31,7 @@ bool handle_menu_option(int option, LIST *list, QUEUE *queue){
             list_menu(list);
             return true;
         case 2:
-            // queue_menu(list, queue);
+            queue_menu(list, queue);
             return true;
         default:
             return false;
