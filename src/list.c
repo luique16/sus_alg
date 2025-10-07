@@ -125,12 +125,20 @@ void remove_patient(LIST *list, int patient_id){
     free(p);
 }
 
-int get_last_patients_id(LIST *list){
+PATIENT* get_first(LIST *list){
     if(is_list_empty(list)){
-        return 0;
+        return NULL;
     }
 
-    return get_patient_id(list->end->patient);
+    return list->head->patient;
+}
+
+PATIENT* get_last(LIST *list){
+    if(is_list_empty(list)){
+        return NULL;
+    }
+
+    return list->end->patient;
 }
 
 void print_list(LIST *list){

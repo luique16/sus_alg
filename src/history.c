@@ -51,7 +51,7 @@ bool load_history(HISTORY *history, char *text){
 }
 
 char* save_history(HISTORY *history) {
-    char* text = (char*) malloc(sizeof(char) * (DEFAULT_MAX_SIZE_TEXT * history->size + 10));
+    char* text = (char*) calloc(1, sizeof(char) * DEFAULT_MAX_SIZE_TEXT);
 
     for(int i = 0; i < history->size; i++){
         strcat(text, history->procedures[i]);

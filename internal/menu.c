@@ -6,7 +6,7 @@
 #include "list.c"
 
 int menu() {
-    printf("==============================\n");
+    printf("\n==============================\n");
     printf("   PRONTO SOCORRO SUS - MENU  \n");
     printf("==============================\n");
 

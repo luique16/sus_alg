@@ -24,10 +24,10 @@ bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
 
         int size = get_list_size(list);
         for (int i = 0; i < size; i++) {
-            int id = get_last_patients_id(list);
+            int id = get_patient_id(get_first(list));
             PATIENT *patient = get_patient_by_id(list, id);
 
-            char* name = get_patient_name(patient);;
+            char* name = get_patient_name(patient);
 
             fprintf(list_file, "\n  {\n");
             fprintf(list_file, "    \"id\": %d,\n", get_patient_id(patient));
@@ -35,8 +35,7 @@ bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
             fprintf(list_file, "    \"history\": \"%s\"\n", save_history(get_patient_history(patient)));
             fprintf(list_file, "  }");
 
-
-            if (i < get_list_size(list) - 1) {
+            if (i < size - 1) {
                 fprintf(list_file, ",");
             }
 
@@ -55,12 +54,14 @@ bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
     } else {
         fprintf(queue_file, "[\n");
 
-        for (int i = 0; i < get_queue_size(queue); i++) {
+        int size = get_queue_size(queue);
+
+        for (int i = 0; i < size; i++) {
             PATIENT *patient = dequeue(queue);
 
             fprintf(queue_file, "  %d", get_patient_id(patient));
 
-            if (i < get_queue_size(queue) - 1) {
+            if (i < size - 1) {
                 fprintf(queue_file, ",");
             }
         }
@@ -92,7 +93,6 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
         complete = true;
 
     while (!complete) {
-        printf("uee\n");
         skip_line(list_file);
 
         int id;
@@ -110,7 +110,7 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
             } else if (strcmp(field, "name") == 0) {
                 sscanf(line, "  \"name\": \"%[^\"]\",", name);
             } else if (strcmp(field, "history") == 0) {
-                sscanf(line, "  \"history\": \"%[^\"]\",", history);
+                sscanf(line, "  \"history\": \"%[^\"]\"", history);
             }
         }
 

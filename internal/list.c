@@ -25,8 +25,13 @@ void add_patient_list(LIST *list){
     PATIENT *patient = init_patient();
     set_patient_name(patient, name);
 
-    int id = get_last_patients_id(list) + 1;
-    set_patient_id(patient, id);
+    PATIENT *last = get_last(list);
+
+    if(last == NULL){
+        set_patient_id(patient, 1);
+    } else {
+        set_patient_id(patient, get_patient_id(last) + 1);
+    }
 
     HISTORY *history = init_history();
     set_patient_history(patient, history);
