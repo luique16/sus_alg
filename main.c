@@ -21,7 +21,7 @@ int main() {
         return 1;
     }
 
-    // Loop de menu
+    // Loop do menu
     while(true){
         int option = menu();
 

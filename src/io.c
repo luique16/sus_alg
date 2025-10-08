@@ -14,6 +14,11 @@ void skip_line(FILE *file) {
     fgets(line, MAX_LINE_SIZE, file);
 }
 
+void flush(void){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+}
+
 bool save(LIST *list, QUEUE *queue, char *list_filename, char *queue_filename) {
     FILE *list_file = fopen(list_filename, "w");
 
@@ -110,7 +115,10 @@ bool load(LIST **list, QUEUE **queue, char *list_filename, char *queue_filename)
             } else if (strcmp(field, "name") == 0) {
                 sscanf(line, "  \"name\": \"%[^\"]\",", name);
             } else if (strcmp(field, "history") == 0) {
-                sscanf(line, "  \"history\": \"%[^\"]\"", history);
+                int empty = sscanf(line, "  \"history\": \"%[^\"]\"", history);
+                if (empty == 0) {
+                    history[0] = '\0';
+                }
             }
         }
 

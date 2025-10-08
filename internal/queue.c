@@ -3,7 +3,14 @@
 #include "../include/list.h"
 #include "../include/queue.h"
 
+#include "patient.c"
+
 void add_patient_queue(LIST *list, QUEUE *queue){
+    if(is_queue_full(queue)){
+        printf("\nFila cheia\n");
+        return;
+    }
+
     printf("\n==============================\n");
     printf("  ADICIONAR PACIENTE - FILA\n");
     printf("==============================\n");
@@ -22,6 +29,23 @@ void add_patient_queue(LIST *list, QUEUE *queue){
     }
 
     enqueue(queue, patient);
+}
+
+void call_patient_queue(LIST *list, QUEUE *queue){
+    if(is_queue_empty(queue)){
+        printf("Sem pacientes na fila.\n");
+        return;
+    }
+
+    printf("\n==============================\n");
+    printf("  CHAMAR PACIENTE - FILA\n");
+    printf("==============================\n");
+
+    printf("\n");
+
+    PATIENT *patient = dequeue(queue);
+
+    user_menu(patient);
 }
 
 void list_queue(LIST *list, QUEUE *queue){
@@ -57,7 +81,7 @@ void queue_menu(LIST *list, QUEUE *queue){
                 add_patient_queue(list, queue);
                 continue;
             case 2:
-                //call_patient_queue(list, queue);
+                call_patient_queue(list, queue);
                 continue;
             case 3:
                 list_queue(list, queue);

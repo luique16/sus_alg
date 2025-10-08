@@ -1,5 +1,6 @@
 #include "../include/history.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -18,47 +19,52 @@ HISTORY* init_history(){
     return history;
 }
 
-bool load_history(HISTORY *history, char *text){
+bool load_history(HISTORY *history, char *text) {
     int procedures_count = 0;
     int procedure_size = 0;
 
-    char *procedure = (char*) malloc(sizeof(char) * DEFAULT_MAX_SIZE_TEXT);
+    char procedure[DEFAULT_MAX_SIZE_TEXT];
 
-    for(int i = 0; i < strlen(text); i++){
-        if(procedure_size >= DEFAULT_MAX_SIZE_TEXT || procedures_count >= DEFAULT_MAX_SIZE){
+    for (int i = 0; i <= strlen(text); i++) {
+        if (procedures_count >= DEFAULT_MAX_SIZE)
             return false;
-        }
 
-        if(text[i] == ';'){
+        if (text[i] == ';' || text[i] == '\0') {
             procedure[procedure_size] = '\0';
-            history->procedures[procedures_count] = procedure;
 
-            procedures_count++;
+            if (procedure_size > 0) {
+                history->procedures[procedures_count] = strdup(procedure);
+                procedures_count++;
+                history->size++;
+            }
+
             procedure_size = 0;
-
-            procedure = (char*) malloc(sizeof(char) * DEFAULT_MAX_SIZE_TEXT);
-
-            continue;
-        } else if(text[i] == '\0'){
-            break;
+        } else {
+            if (procedure_size < DEFAULT_MAX_SIZE_TEXT - 1) {
+                procedure[procedure_size++] = text[i];
+            } else {
+                return false;
+            }
         }
-
-        procedure[procedure_size] = text[i];
-        procedure_size++;
     }
 
     return true;
 }
 
-char* save_history(HISTORY *history) {
-    char* text = (char*) calloc(1, sizeof(char) * DEFAULT_MAX_SIZE_TEXT);
 
-    for(int i = 0; i < history->size; i++){
+char* save_history(HISTORY *history) {
+    char* text = calloc(DEFAULT_MAX_SIZE * (DEFAULT_MAX_SIZE_TEXT + 1), sizeof(char));
+
+    if(history->size == 0){
+        return text;
+    }
+
+    for(int i = 0; i < history->size - 1; i++) {
         strcat(text, history->procedures[i]);
         strcat(text, ";");
     }
 
-    strcat(text, "\0");
+    strcat(text, history->procedures[history->size - 1]);
 
     return text;
 }
@@ -68,7 +74,7 @@ bool is_history_empty(HISTORY *history){
 }
 
 bool is_history_full(HISTORY *history){
-    return history->size == DEFAULT_MAX_SIZE;
+    return history->size >= DEFAULT_MAX_SIZE;
 }
 
 void add_procedure_to_history(HISTORY *history, char *procedure){
@@ -118,4 +124,14 @@ bool delete_history(HISTORY **history) {
     *history = NULL;
 
     return true;
+}
+
+void print_history(HISTORY *history){
+    if(history == NULL){
+        return;
+    }
+
+    for(int i = 0; i < history->size; i++){
+        printf("[%d] %s\n", i + 1, history->procedures[i]);
+    }
 }

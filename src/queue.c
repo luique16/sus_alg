@@ -32,7 +32,7 @@ bool is_queue_empty(QUEUE *queue){
 }
 
 bool enqueue(QUEUE *queue, PATIENT *patient){
-    if(queue == NULL){
+    if(queue == NULL || queue->size >= DEFAULT_MAX_SIZE){
         return false;
     }
 

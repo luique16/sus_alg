@@ -2,11 +2,7 @@
 #include <string.h>
 
 #include "../include/list.h"
-
-void flush(void){
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}
-}
+#include "../include/io.h"
 
 void add_patient_list(LIST *list){
     printf("\n==============================\n");
@@ -71,7 +67,7 @@ void list_patients_list(LIST *list){
 
 void search_patient_by_name_list(LIST *list){
     printf("\n==============================\n");
-    printf("      BUSCAR PACIENTE        \n");
+    printf("       BUSCAR PACIENTE       \n");
     printf("==============================\n");
 
     printf("\n");
@@ -91,7 +87,8 @@ void search_patient_by_name_list(LIST *list){
 
     printf("ID: %d\n", get_patient_id(patient));
     printf("Nome: %s\n", get_patient_name(patient));
-    printf("Histórico: %s\n", save_history(get_patient_history(patient)));
+    printf("Histórico:\n");
+    print_history(get_patient_history(patient));
 }
 
 void search_patient_by_id_list(LIST *list){
@@ -113,7 +110,8 @@ void search_patient_by_id_list(LIST *list){
 
     printf("ID: %d\n", get_patient_id(patient));
     printf("Nome: %s\n", get_patient_name(patient));
-    printf("Histórico: %s\n", save_history(get_patient_history(patient)));
+    printf("Histórico:\n");
+    print_history(get_patient_history(patient));
 }
 
 void list_menu(LIST *list){
