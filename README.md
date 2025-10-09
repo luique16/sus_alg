@@ -71,7 +71,7 @@ O arquivo queue.json armazena a fila com um array de inteiros representando os i
 - `internal`    Arquivos do cliente (sistema)
 - `main.c`      Arquivo principal do cliente
 
-### Ingegrantes
+### Integrantes do grupo
 
 - Luís Henrique Fonseca Aguilar - 16885720
 - Fabio Ganum FIlho - 15450803
