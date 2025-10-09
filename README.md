@@ -14,6 +14,22 @@ make data  # Gera os arquivos de dados
 make run   # Executa o programa
 ```
 
+### Funcionamento
+
+O programa é formado por três interfaces principais:
+
+1. Interface de lista (cadastro geral)
+
+Nessa interface, é possível cadastrar novos pacientes, listar os pacientes cadastrados, buscar pacientes e remover pacientes. 
+
+2. Interface de fila (administração de fila)
+
+Nessa interface, é possível adicionar pacientes à fila, listar os pacientes na fila e chamar os pacientes para a próxima interface.
+
+3. Interface de paciente (administração de procedimentos)
+
+Nessa interface, é possível listar os procedimentos realizados pelo paciente, adicionar novos procedimentos e remover procedimentos.
+
 ### Estruturas utilizadas
 
 - Lista de pacientes
@@ -55,3 +71,7 @@ O arquivo queue.json armazena a fila com um array de inteiros representando os i
 - `internal`    Arquivos do cliente (sistema)
 - `main.c`      Arquivo principal do cliente
 
+### Ingegrantes
+
+- Luís Henrique Fonseca Aguilar - 16885720
+- Fabio Ganum FIlho - 15450803
